@@ -37,7 +37,7 @@ async function searchShows(query) {
   res = await axios.get(`http://api.tvmaze.com/singlesearch/shows?q=${query}&embed=episodes`);
   console.log(res);
 
-  return [
+  return [  //single-search-response model
     {
       id: res.data.id,
       name: res.data.name,
