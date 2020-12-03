@@ -32,11 +32,11 @@ interact with (ex: top gear and battlestar galactica)
       }
  */
 
- const MISSING_IMAGE_URL = "http://tinyurl.com/missing-tv";
+ const MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
 async function searchShows(query) {
   // DONE: Make an ajax request to the searchShows api.  Remove
   // hard coded data.
-  let res = await axios.get(`http://api.tvmaze.com/search/shows?q=${query}`);
+  let res = await axios.get(`https://api.tvmaze.com/search/shows?q=${query}`);
   console.log(res);
 
   let arrayOfShows = res.data.map((searchResult) => {
@@ -107,7 +107,7 @@ $("#search-form").on("submit", async function handleSearch (evt) {
 async function getEpisodes(id) {
   // TODO: get episodes from tvmaze
   //       you can get this by making GET request to
-  //       http://api.tvmaze.com/shows/SHOW-ID-HERE/episodes
+  //       https://api.tvmaze.com/shows/SHOW-ID-HERE/episodes
 
   // TODO: return array-of-episode-info, as described in docstring above
 }
