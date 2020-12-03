@@ -1,3 +1,17 @@
+/*
+ * An API-based app to get information on episodes and 
+ * other details of your favorite TV shows in cooperation with TV-Maze. 
+ * (under construction)
+ */
+/*
+FUTURE TO-DOS/Improvements
+- initially making it with a single show return function.  Later update it so that if more
+than one show is returned with the same name the user can pick which version of it they want to 
+interact with (ex: top gear and battlestar galactica)
+- add try-catch(e) blocks in case of 404 errors, etc.
+- write up some tests for this
+*/
+
 /** Given a query string, return array of matching shows:
  *     { id, name, summary, episodesUrl }
  */
@@ -20,13 +34,15 @@
 async function searchShows(query) {
   // TODO: Make an ajax request to the searchShows api.  Remove
   // hard coded data.
+  res = await axios.get(`http://api.tvmaze.com/singlesearch/shows?q=${query}&embed=episodes`);
+  console.log(res);
 
   return [
     {
-      id: 1767,
-      name: "The Bletchley Circle",
-      summary: "<p><b>The Bletchley Circle</b> follows the journey of four ordinary women with extraordinary skills that helped to end World War II.</p><p>Set in 1952, Susan, Millie, Lucy and Jean have returned to their normal lives, modestly setting aside the part they played in producing crucial intelligence, which helped the Allies to victory and shortened the war. When Susan discovers a hidden code behind an unsolved murder she is met by skepticism from the police. She quickly realises she can only begin to crack the murders and bring the culprit to justice with her former friends.</p>",
-      image: "http://static.tvmaze.com/uploads/images/medium_portrait/147/369403.jpg"
+      id: res.data.id,
+      name: res.data.name,
+      summary: res.data.summary,
+      image: res.data.image.medium
     }
   ]
 }
@@ -48,6 +64,7 @@ function populateShows(shows) {
            <div class="card-body">
              <h5 class="card-title">${show.name}</h5>
              <p class="card-text">${show.summary}</p>
+             <img src="${show.image}">
            </div>
          </div>
        </div>
