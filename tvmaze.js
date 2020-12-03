@@ -63,8 +63,9 @@ function populateShows(shows) {
          <div class="card" data-show-id="${show.id}">
            <div class="card-body">
              <h5 class="card-title">${show.name}</h5>
-             <p class="card-text">${show.summary}</p>
              <img src="${show.image}">
+             <p class="card-text">${show.summary}</p>
+             
            </div>
          </div>
        </div>
