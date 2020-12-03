@@ -1,20 +1,19 @@
 <!doctype html>
 <html>
   <head>
-    <title>TV a-Maze-ing</title>
+    <title>TV a-Maze</title>
     <link rel="stylesheet"
       href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+      <link rel="stylesheet" href="css.css">
   </head>
   <body>
     <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-        <h1>TV a-Maze-ing</h1>
-        <em>A TV search-engine by <a href="https://larry-volz.github.io/Portfolio-for-Larry-Volz/">Larry Volz</a> powered by the TV Maze API</em><br>
-      </div>
-      </div>
-    <form class="form-inline mt-4" id="search-form">
-      <input class="form-control" id="search-query" placeholder="Search for ANY TV show!">
+
+    <h1 class = "blurb">TV a-Maze</h1>
+    <span class="blurb"><em>A TV search-engine by <a href="https://larry-volz.github.io/Portfolio-for-Larry-Volz/">Larry Volz </a>powered by the TV Maze API</em></span>
+
+    <form class="form-inline align-items-end" id="search-form">
+      <input class="form-control mt-3 mr-1" id="search-query" placeholder="Search for ANY TV show!">
       <button class="btn btn-primary" type="submit">Go!</button>
     </form>
 
@@ -29,7 +28,10 @@
 
     <script src="http://unpkg.com/jquery"></script>
     <script src="http://unpkg.com/axios/dist/axios.js"></script>
+
     <script src="tvmaze.js"></script>
+
+    <!-- <script src = "teachers_version.js"></script> -->
 
     </div>
 

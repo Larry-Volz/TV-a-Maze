@@ -31,20 +31,25 @@ interact with (ex: top gear and battlestar galactica)
         image: <an image from the show data, or a default imege if no image exists, (image isn't needed until later)>
       }
  */
+
+ const MISSING_IMAGE_URL = "http://tinyurl.com/missing-tv";
 async function searchShows(query) {
-  // TODO: Make an ajax request to the searchShows api.  Remove
+  // DONE: Make an ajax request to the searchShows api.  Remove
   // hard coded data.
-  res = await axios.get(`http://api.tvmaze.com/singlesearch/shows?q=${query}&embed=episodes`);
+  let res = await axios.get(`http://api.tvmaze.com/search/shows?q=${query}`);
   console.log(res);
 
-  return [  //single-search-response model
-    {
-      id: res.data.id,
-      name: res.data.name,
-      summary: res.data.summary,
-      image: res.data.image.medium
-    }
-  ]
+  let arrayOfShows = res.data.map((searchResult) => {
+    let show = searchResult.show;
+  
+      return  {
+          id: show.id,
+          name: show.name,
+          summary: show.summary,
+          image: show.image ? show.image.medium : MISSING_IMAGE_URL
+        };
+    });
+   return arrayOfShows;
 }
 
 
