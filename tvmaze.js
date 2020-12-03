@@ -5,11 +5,8 @@
  */
 /*
 FUTURE TO-DOS/Improvements
-- initially making it with a single show return function.  Later update it so that if more
-than one show is returned with the same name the user can pick which version of it they want to 
-interact with (ex: top gear and battlestar galactica)
 - add try-catch(e) blocks in case of 404 errors, etc.
-- write up some tests for this
+- write up some tests 
 */
 
 /** Given a query string, return array of matching shows:
@@ -32,15 +29,17 @@ interact with (ex: top gear and battlestar galactica)
       }
  */
 
- const MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
-async function searchShows(query) {
-  // DONE: Make an ajax request to the searchShows api.  Remove
-  // hard coded data.
-  let res = await axios.get(`https://api.tvmaze.com/search/shows?q=${query}`);
-  console.log(res);
+const MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
 
-  let arrayOfShows = res.data.map((searchResult) => {
-    let show = searchResult.show;
+async function searchShows(query) {
+  // DONE: Make an ajax request to the searchShows api.  Removed
+  // hard coded data.
+  //target variables: res.data.show.etc.
+  let res = await axios.get(`https://api.tvmaze.com/search/shows?q=${query}`);
+  // console.log(res);
+
+  let arrayOfShows = res.data.map((tv) => {
+    let show = tv.show;
   
       return  {
           id: show.id,
@@ -63,20 +62,27 @@ function populateShows(shows) {
   $showsList.empty();
 
   for (let show of shows) {
-    let $item = $(
+    let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
       `<div class="col-md-6 col-lg-3 Show" data-show-id="${show.id}">
          <div class="card" data-show-id="${show.id}">
            <div class="card-body">
              <h5 class="card-title">${show.name}</h5>
-             <img src="${show.image}">
+             <img class="card-img-top" src="${show.image}">
              <p class="card-text">${show.summary}</p>
-             
+             <button class = "btn btn-primary border rounded" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
            </div>
          </div>
        </div>
       `);
 
     $showsList.append($item);
+
+    const btnIdStr = `#btn-${show.id}`;
+    
+    $(btnIdStr).on("click", () =>{      
+      getEpisodes($(btnIdStr).val());
+
+    })
   }
 }
 
@@ -105,9 +111,53 @@ $("#search-form").on("submit", async function handleSearch (evt) {
  */
 
 async function getEpisodes(id) {
-  // TODO: get episodes from tvmaze
-  //       you can get this by making GET request to
-  //       https://api.tvmaze.com/shows/SHOW-ID-HERE/episodes
+  // DONE: get episodes from tvmaze
+  console.log(`Button id: ${id} clicked`);
 
-  // TODO: return array-of-episode-info, as described in docstring above
+  res = await axios.get(`https://api.tvmaze.com/shows/${id}/episodes`)
+
+  // DONE: returns array-of-episode-info
+
+  let arrayOfEpisodes = res.data.map((tv) => {
+    // let show = tv.show;
+  
+      return  {
+          id: tv.id,
+          name: tv.name,
+          season: tv.season,
+          number: tv.number
+        };
+    });
+    console.log(arrayOfEpisodes);
+   return arrayOfEpisodes;
+}
+
+
+
+//------------------------------- NEW STUFF -----------------------------------------
+/**
+ * accepts an array of episodes and populates a div with them
+ * @param {} shows 
+ */
+
+function populateEpisodes(shows) {
+  const $showsList = $("#shows-list");
+  $showsList.empty();
+
+  for (let show of shows) {
+    let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
+      `<div class="col-md-6 col-lg-3 Show" data-show-id="${show.id}">
+         <div class="card" data-show-id="${show.id}">
+           <div class="card-body">
+             <h5 class="card-title">${show.name}</h5>
+             <img class="card-img-top" src="${show.image}">
+             <p class="card-text">${show.summary}</p>
+             
+           </div>
+         </div>
+       </div>
+      `);
+
+    $showsList.append($item);
+  }
 }

@@ -6,3 +6,13 @@ body {
 .blurb {
     color: white;
 }
+
+.blurb-smaller {
+    font-size: 1.8rem;
+    font-style: italic;
+}
+
+.blurb-smallest {
+    font-size: .9rem;
+    font-style: italic;
+}
