@@ -69,7 +69,7 @@ function populateShows(shows) {
              <h5 class="card-title">${show.name}</h5>
              <img class="card-img-top" src="${show.image}">
              <p class="card-text">${show.summary}</p>
-             <button class = "btn btn-primary border rounded" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
+             <button class = "btn btn-primary border rounded data-toggle="modal" data-target="#exampleModalLong"" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
            </div>
          </div>
        </div>
@@ -78,11 +78,12 @@ function populateShows(shows) {
     $showsList.append($item);
 
     const btnIdStr = `#btn-${show.id}`;
-    
-    $(btnIdStr).on("click", () =>{      
-      getEpisodes($(btnIdStr).val());
 
-    })
+    $(btnIdStr).on("click", () =>{      
+      const episodeArray = getEpisodes($(btnIdStr).val());
+      populateEpisodes(episodeArray);
+
+    });
   }
 }
 
@@ -141,23 +142,27 @@ async function getEpisodes(id) {
  */
 
 function populateEpisodes(shows) {
-  const $showsList = $("#shows-list");
-  $showsList.empty();
+  const $episodesList = $("#episodes-list");
+  // $episodesList.empty();
+  console.log('IN POPULATE EPISODES METHOD')
+  $episodesList.css("display","");
+  $episodesList.css("display","block");
+  $episodesList.text("I AM HERE!!!");
 
-  for (let show of shows) {
-    let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
-      `<div class="col-md-6 col-lg-3 Show" data-show-id="${show.id}">
-         <div class="card" data-show-id="${show.id}">
-           <div class="card-body">
-             <h5 class="card-title">${show.name}</h5>
-             <img class="card-img-top" src="${show.image}">
-             <p class="card-text">${show.summary}</p>
+  // for (let episode of episodeList) {
+  //   let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
+  //     `<div class="col-md-6 col-lg-3 Show" data-show-id="${dpisode.id}">
+  //        <div class="card" data-show-id="${episode.id}">
+  //          <div class="card-body">
+  //            <h5 class="card-title">${episode.name}</h5>
+  //            <img class="card-img-top" src="${show.image}">
+  //            <p class="card-text">${show.summary}</p>
              
-           </div>
-         </div>
-       </div>
-      `);
+  //          </div>
+  //        </div>
+  //      </div>
+  //     `);
 
-    $showsList.append($item);
-  }
+  //   $showsList.append($item);
+  // }
 }
