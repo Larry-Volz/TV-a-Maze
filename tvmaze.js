@@ -103,6 +103,8 @@ $("#search-form").on("submit", async function handleSearch (evt) {
   let shows = await searchShows(query);
 
   populateShows(shows);
+
+  $("#search-query").val("");
 });
 
 
