@@ -146,8 +146,13 @@ function populateEpisodes(episodeList) {
   $("#episodes-area").show();
 
   let epiOutput = ``;
+  let season = 0;
   for (epi of episodeList) { 
-    let epiOutput += `Season ${epi.season}: ${epi.name}\n`
+    if (epi.season > season) {
+      epiOutput += `<br><b>Season ${epi.season}: </b><br>`;
+      season++;
+    }
+    epiOutput += `${epi.name}<br>`
   };
 
   let $item = $(`<!-- Modal -->
@@ -165,7 +170,6 @@ function populateEpisodes(episodeList) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
