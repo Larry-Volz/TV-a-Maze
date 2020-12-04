@@ -68,7 +68,7 @@ function populateShows(shows) {
              <h5 class="card-title">${show.name}</h5>
              <img class="card-img-top" src="${show.image}">
              <p class="card-text">${show.summary}</p>
-             <button class = "btn btn-primary border rounded" data-toggle="modal"  data-target="#exampleModalLong" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
+             <button class = "btn btn-primary border rounded" data-toggle="modal"  data-target="#episodeModal" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
            </div>
          </div>
        </div>
@@ -98,7 +98,7 @@ $("#search-form").on("submit", async function handleSearch (evt) {
   let query = $("#search-query").val();
   if (!query) return;
 
-  $("#episodes-area").hide();
+  // $("#episodes-area").hide();
 
   let shows = await searchShows(query);
 
@@ -145,7 +145,7 @@ function populateEpisodes(episodeList) {
   const $episodesArea = $("#episodes-area");
   $("#episodes-area").show();
 
-  let epiOutput = ``;
+  let epiOutput = "";
   let season = 0;
   for (epi of episodeList) { 
     if (epi.season > season) {
@@ -155,12 +155,14 @@ function populateEpisodes(episodeList) {
     epiOutput += `${epi.name}<br>`
   };
 
+  // 
+
   let $item = $(`<!-- Modal -->
-  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal fade" id="episodeModal" tabindex="-1" role="dialog" aria-labelledby="episodeModalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Episode List</h5>
+          <h5 class="modal-title" id="episodeModalTitle">Episode List</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -178,22 +180,10 @@ function populateEpisodes(episodeList) {
      $episodesArea.append($item);
   
 
-  $('#exampleModalLong').modal('show')
+  $('#episodeModal').modal('show')
+
+  $('#episodeModal').on('hidden.bs.modal', function (e) {
+    $("#episodeModal").remove();
+  })
 }
 
-
-
-  // for (let episode of episodeList) {
-  //   let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
-  //     `<div class="col-md-6 col-lg-3 Show" data-show-id="${dpisode.id}">
-  //        <div class="card" data-show-id="${episode.id}">
-  //          <div class="card-body">
-  //            <h5 class="card-title">${episode.name}</h5>
-  //            <img class="card-img-top" src="${show.image}">
-  //            <p class="card-text">${show.summary}</p>
-             
-  //          </div>
-  //        </div>
-  //      </div>
-  //     `);
-  // }
