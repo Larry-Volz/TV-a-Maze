@@ -36,7 +36,6 @@ async function searchShows(query) {
   // hard coded data.
   //target variables: res.data.show.etc.
   let res = await axios.get(`https://api.tvmaze.com/search/shows?q=${query}`);
-  // console.log(res);
 
   let arrayOfShows = res.data.map((tv) => {
     let show = tv.show;
@@ -79,8 +78,8 @@ function populateShows(shows) {
 
     const btnIdStr = `#btn-${show.id}`;
 
-    $(btnIdStr).on("click", () =>{      
-      const episodeArray = getEpisodes($(btnIdStr).val());
+    $(btnIdStr).on("click", async () =>{      
+      const episodeArray = await getEpisodes($(btnIdStr).val());
       populateEpisodes(episodeArray);
 
     });
@@ -141,17 +140,15 @@ async function getEpisodes(id) {
  * @param {} shows 
  */
 
-function populateEpisodes(shows) {
-  const $episodesList = $("#episodes-list");
-  // $episodesList.empty();
-  console.log('IN POPULATE EPISODES METHOD')
-  $episodesList.css("display","");
-  $episodesList.css("display","block");
+function populateEpisodes(episodeList) {
+ 
+  const $episodesArea = $("#episodes-area");
   $("#episodes-area").show();
 
- 
-
-  $episodesList.text("I AM HERE!!!");
+  let epiOutput = ``;
+  for (epi of episodeList) { 
+    let epiOutput += `Season ${epi.season}: ${epi.name}\n`
+  };
 
   let $item = $(`<!-- Modal -->
   <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -164,7 +161,7 @@ function populateEpisodes(shows) {
           </button>
         </div>
         <div class="modal-body">
-          ... STUFF AND THINGS HERE!
+          ${epiOutput}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -174,7 +171,7 @@ function populateEpisodes(shows) {
     </div>
   </div>`);
 
-     $episodesList.append($item);
+     $episodesArea.append($item);
   
 
   $('#exampleModalLong').modal('show')
