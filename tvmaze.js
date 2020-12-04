@@ -29,6 +29,55 @@ FUTURE TO-DOS/Improvements
       }
  */
 
+
+// ----------------------------------------- UPCOMING SHOW SECTION ----------------------------------------//
+
+
+
+//TODO: set up a div #upComingShows col to hold upcoming shows
+//TODO: set up a drop-down with genre's top right corner
+//TODO: set up switch for web shows vs networkshows
+//TODO: set up a calendar input to get date (default to today)
+//TODO: create function to retrieve upcoming web shows by date
+//TODO: create function to retrieve upcoming network shows by date
+//TODO: create showUpcomingShows() to populate div with chosen show array with optional offset input
+      //include up and down font-awesome icons 
+      //re-call showUpcomingShows() with offset to update div
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------- SHOW SEARCH SECTION ----------------------------------------//
+
+/** Handle search form submission:
+ *    - hide episodes area
+ *    - get list of matching shows and show in shows list
+ */
+
+$("#search-form").on("submit", async function handleSearch (evt) {
+  evt.preventDefault();
+
+  let query = $("#search-query").val();
+  if (!query) return;
+
+  // $("#episodes-area").hide();
+
+  let shows = await searchShows(query);
+
+  populateShows(shows);
+
+  $("#search-query").val("");
+});
+
+
 const MISSING_IMAGE_URL = "https://tinyurl.com/missing-tv";
 
 async function searchShows(query) {
@@ -62,16 +111,18 @@ function populateShows(shows) {
 
   for (let show of shows) {
     let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
-      `<div class="col-md-6 col-lg-3 Show" data-show-id="${show.id}">
-         <div class="card" data-show-id="${show.id}">
-           <div class="card-body">
-             <h5 class="card-title">${show.name}</h5>
-             <img class="card-img-top" src="${show.image}">
-             <p class="card-text">${show.summary}</p>
-             <button class = "btn btn-primary border rounded" data-toggle="modal"  data-target="#episodeModal" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
-           </div>
-         </div>
-       </div>
+      `<div class = "row">
+        <div class="col-6 mt-2 Show" data-show-id="${show.id}">
+          <div class="card" data-show-id="${show.id}">
+            <div class="card-body">
+              <h5 class="card-title">${show.name}</h5>
+              <img class="card-img-top" src="${show.image}">
+              <p class="card-text">${show.summary}</p>
+              <button class = "btn btn-primary border rounded" data-toggle="modal"  data-target="#episodeModal" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
+            </div>
+          </div>
+        </div>
+      </div>
       `);
 
     $showsList.append($item);
@@ -85,27 +136,6 @@ function populateShows(shows) {
     });
   }
 }
-
-
-/** Handle search form submission:
- *    - hide episodes area
- *    - get list of matching shows and show in shows list
- */
-
-$("#search-form").on("submit", async function handleSearch (evt) {
-  evt.preventDefault();
-
-  let query = $("#search-query").val();
-  if (!query) return;
-
-  // $("#episodes-area").hide();
-
-  let shows = await searchShows(query);
-
-  populateShows(shows);
-
-  $("#search-query").val("");
-});
 
 
 /** Given a show ID, return list of episodes:
