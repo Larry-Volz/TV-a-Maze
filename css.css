@@ -1,11 +1,11 @@
-body {
+/* body {
     background-color: black;
-    color: black;
+    color: rgb(248, 245, 245);
 }
 
 .blurb {
     color: white;
-}
+} */
 
 .blurb-smaller {
     font-size: 1.8rem;

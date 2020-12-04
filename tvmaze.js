@@ -69,7 +69,7 @@ function populateShows(shows) {
              <h5 class="card-title">${show.name}</h5>
              <img class="card-img-top" src="${show.image}">
              <p class="card-text">${show.summary}</p>
-             <button class = "btn btn-primary border rounded data-toggle="modal" data-target="#exampleModalLong"" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
+             <button class = "btn btn-primary border rounded" data-toggle="modal"  data-target="#exampleModalLong" id ="btn-${show.id}" value = "${show.id}">Get Episode List</button>
            </div>
          </div>
        </div>
@@ -147,7 +147,40 @@ function populateEpisodes(shows) {
   console.log('IN POPULATE EPISODES METHOD')
   $episodesList.css("display","");
   $episodesList.css("display","block");
+  $("#episodes-area").show();
+
+ 
+
   $episodesList.text("I AM HERE!!!");
+
+  let $item = $(`<!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Episode List</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ... STUFF AND THINGS HERE!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>`);
+
+     $episodesList.append($item);
+  
+
+  $('#exampleModalLong').modal('show')
+}
+
+
 
   // for (let episode of episodeList) {
   //   let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
@@ -162,7 +195,4 @@ function populateEpisodes(shows) {
   //        </div>
   //      </div>
   //     `);
-
-  //   $showsList.append($item);
   // }
-}
