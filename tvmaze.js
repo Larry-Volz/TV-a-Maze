@@ -34,18 +34,45 @@ FUTURE TO-DOS/Improvements
 
 
 
-//TODO: set up a div #upComingShows col to hold upcoming shows
-//TODO: set up a drop-down with genre's top right corner
-//TODO: set up switch for web shows vs networkshows
-//TODO: set up a calendar input to get date (default to today)
-//TODO: create function to retrieve upcoming web shows by date
-//TODO: create function to retrieve upcoming network shows by date
+//DONE: set up a div #upComingShows col to hold upcoming shows
+
+//TODO: create getWebShows(date) to retrieve upcoming WEB shows by date
+//TODO: create getNetShows(date) to retrieve upcoming NETWORK shows by date
+      //TODO: hard-code each date & do generic GET first to test them
+
 //TODO: create showUpcomingShows() to populate div with chosen show array with optional offset input
       //include up and down font-awesome icons 
       //re-call showUpcomingShows() with offset to update div
 
+//TODO: set up a calendar input to get date (default to today)
+      //TODO: hard-code it first to test it
+//TODO: set up a drop-down with genre's top right corner
+//TODO: set up switch for web shows vs networkshows      
+
+//TODO: make icons at top of show info for episodes, cast and dates coming up using font-awesome and tool tips
+
+function constructDate() {
+  //later use parameters to customize - this just defaults to today
+  let dateObj = new Date();
+  let month = dateObj.getUTCMonth() + 1; //months from 1-12
+  let day = dateObj.getUTCDate();
+  let year = dateObj.getUTCFullYear();
+
+newDate = `${year}-${month}-${day}`;
+  return newDate;
+}
+
+async function getWebShows(date){
+  const showArray = await axios.get(`https://api.tvmaze.com/schedule/web?date=${date}`);
+  console.log(webShows);
+return showArray;
+}
 
 
+//??? WHAT AM I DOING DIFFERENTLY HERE THAN AT 99?!
+let today = constructDate();
+
+// let webShows = getWebShows(today);
 
 
 
@@ -111,10 +138,10 @@ function populateShows(shows) {
 
   for (let show of shows) {
     let $item = $(  //NOTICE USE OF data- for show-id I we can ref it later!!!
-      `<div class = "row">
-        <div class="col-6 mt-2 Show" data-show-id="${show.id}">
+      `
+        <div class="col-xl-6 mt-2 Show" data-show-id="${show.id}" >
           <div class="card" data-show-id="${show.id}">
-            <div class="card-body">
+            <div class="card-body" >
               <h5 class="card-title">${show.name}</h5>
               <img class="card-img-top" src="${show.image}">
               <p class="card-text">${show.summary}</p>
@@ -122,7 +149,7 @@ function populateShows(shows) {
             </div>
           </div>
         </div>
-      </div>
+      
       `);
 
     $showsList.append($item);
