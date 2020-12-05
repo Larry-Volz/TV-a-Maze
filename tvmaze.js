@@ -63,16 +63,29 @@ newDate = `${year}-${month}-${day}`;
 }
 
 async function getWebShows(date){
-  const showArray = await axios.get(`https://api.tvmaze.com/schedule/web?date=${date}`);
-  console.log(webShows);
-return showArray;
+  // const showArray = await axios.get(`https://api.tvmaze.com/schedule/web?date=${date}`);
+   $.getJSON(`https://api.tvmaze.com/schedule/web`, response => {
+      const showArray = response;
+      console.log(showArray[0].id);
+      return showArray[0].id;
+   });
 }
+
+//ORIGINAL
+// async function getWebShows(date){
+//   // const showArray = await axios.get(`https://api.tvmaze.com/schedule/web?date=${date}`);
+//   const showArray = await axios.get(`https://api.tvmaze.com/schedule/web`);
+
+//   console.log(webShows);
+// return showArray;
+
+// }
 
 
 //??? WHAT AM I DOING DIFFERENTLY HERE THAN AT 99?!
 let today = constructDate();
 
-// let webShows = getWebShows(today);
+let webShows = getWebShows(today);
 
 
 
